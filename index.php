@@ -5,11 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD PHP y MySQL</title>
+    <title>Personas y Mascotas</title>
 </head>
 <body>
 
 <h2>Personas y sus Mascotas Preferidas</h2>
+
+<!-- Enlace para agregar nuevas personas -->
+<a href="agregar.php">Agregar Nueva Persona</a>
+
 <?php
 $sql = "SELECT * FROM personas";
 $result = $conn->query($sql);
@@ -35,5 +39,6 @@ if ($result->num_rows > 0) {
     echo "0 resultados";
 }
 ?>
+
 </body>
 </html>
