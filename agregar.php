@@ -1,43 +1,42 @@
-<?php include 'db.php'; ?>
+<?php
+include 'db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $mascota_preferida = $_POST['mascota_preferida'];
+
+    $sql = "INSERT INTO personas (nombre, apellido, mascota_preferida) VALUES ('$nombre', '$apellido', '$mascota_preferida')";
+
+    if ($conn->query($sql) === TRUE) {
+        header('Location: index.php');
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personas y Mascotas</title>
+    <title>Agregar Persona</title>
 </head>
 <body>
 
-<h2>Personas y sus Mascotas Preferidas</h2>
+<h2>Agregar Persona</h2>
 
-<!-- Enlace para agregar nuevas personas -->
-<a href="agregar.php">Agregar Nueva Persona</a>
-
-<?php
-$sql = "SELECT * FROM personas";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    echo "<table><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Mascota Preferida</th><th>Acciones</th></tr>";
-
-    while($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>".$row["id"]."</td>
-                <td>".$row["nombre"]."</td>
-                <td>".$row["apellido"]."</td>
-                <td>".$row["mascota_preferida"]."</td>
-                <td>
-                    <a href='editar.php?id=".$row["id"]."'>Editar</a> |
-                    <a href='eliminar.php?id=".$row["id"]."'>Eliminar</a>
-                </td>
-              </tr>";
-    }
-
-    echo "</table>";
-} else {
-    echo "0 resultados";
-}
-?>
+<form method="post">
+    Nombre: <input type="text" name="nombre" required><br>
+    Apellido: <input type="text" name="apellido" required><br>
+    Mascota Preferida: 
+    <select name="mascota_preferida" required>
+        <option value="Perro">Perro</option>
+        <option value="Gato">Gato</option>
+    </select><br>
+    <input type="submit" value="Agregar">
+</form>
 
 </body>
 </html>
